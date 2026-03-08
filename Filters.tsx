@@ -32,11 +32,11 @@ export default function Filters({
             >
 
                 <option value="">
-                    No sort
+                    Нет сортировки
                 </option>
 
                 <option value="price">
-                    Sort by price
+                    Сортировать по цене
                 </option>
 
             </select>
@@ -44,5 +44,6 @@ export default function Filters({
         </div>
 
     )
+
 
 }
