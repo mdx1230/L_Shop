@@ -1,35 +1,67 @@
-import { CartItem } from "../types/CartItem"
+import { useContext } from "react"
+import { CartContext } from "../store/CartContext"
 
-interface Props {
+export default function Basket() {
 
-    items: CartItem[]
+    const { cart, increase, decrease } = useContext(CartContext)
 
-}
-
-export default function Basket({ items }: Props) {
+    const total = cart.reduce(
+        (sum, item) => sum + item.product.price * item.quantity,
+        0
+    )
 
     return (
 
         <div className="basket">
 
-            {items.map(item => (
+            <h3>Корзина</h3>
 
-                <div key={item.productId}>
+            {cart.length === 0 && (
+                <p>Корзина пуста</p>
+            )}
+
+            {cart.map(item => (
+
+                <div key={item.product.id}>
 
                     <span data-title="basket">
-                        {item.title}
+                        {item.product.name}
                     </span>
 
                     <span data-price="basket">
-                        {item.price}
+                        ${item.product.price}
                     </span>
+
+                    <div>
+
+                        <button onClick={() =>
+                            decrease(item.product.id)
+                        }>
+                            -
+                        </button>
+
+                        <span>
+                            {item.quantity}
+                        </span>
+
+                        <button onClick={() =>
+                            increase(item.product.id)
+                        }>
+                            +
+                        </button>
+
+                    </div>
 
                 </div>
 
             ))}
 
+            {cart.length > 0 && (
+                <h4>
+                    Всего: ${total}
+                </h4>
+            )}
+
         </div>
-
     )
-
 }
